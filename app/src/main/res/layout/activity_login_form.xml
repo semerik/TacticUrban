@@ -6,4 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".LoginForm">
 
+    <TextView
+        android:id="@+id/createOccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:text="@string/createOccount_createOccount"
+        android:textSize="18dp"
+        android:textStyle="bold"
+
+        android:layout_marginTop="48dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:hint="@string/createAccount_instructions"
+
+        android:layout_marginTop="16dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createOccount" />
+
+    <View
+        android:id="@+id/linea1"
+        android:layout_width="0dp"
+        android:layout_height="2.2dp"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="@+id/textO"
+        app:layout_constraintBottom_toBottomOf="@+id/textO"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textO"
+
+
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
+        />
+
+    <View
+        android:id="@+id/linea2"
+        android:layout_width="0dp"
+        android:layout_height="2.2dp"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="@+id/textO"
+        app:layout_constraintBottom_toBottomOf="@+id/textO"
+        app:layout_constraintStart_toEndOf="@+id/textO"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="16dp"
+
+        />
+
+
+    <TextView
+        android:id="@+id/textO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="O"
+        android:textColor="#000000"
+        android:textSize="24sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instructions"
+
+        android:layout_margin="8dp"
+
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
