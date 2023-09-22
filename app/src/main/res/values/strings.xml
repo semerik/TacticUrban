@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">TacticUrban</string>
+    <string name="createOccount_createOccount">Create a new account</string>
+    <string name="createAccount_instructions">Enter all the requested data to\ncreate your account in urban tactics</string>
+    <string name="createAccount_fullName">Enter Full Name</string>
+    <string name="createAccount_userName">Enter User Name</string>
+    <string name="createAccount_eMail">Enter eMail</string>
+    <string name="createAccount_password">Enter Password</string>
+    <string name="createAccount_confirmPassword">Confirm Password</string>
+    <array name="createAccount_rol">
+        <item>Ciudadano</item>
+        <item>Funcionario </item>
+    </array>
+    <string name="createAccount_direction">Accept the location terms</string>
+    <string name="createAccount_direction_terms">Get address</string>
+    <string name="createAccount_birthdate">Select Birthdate</string>
+    <string name="createAccount_genderOption">Gender: </string>
+    <string name="createAccount_genderOption_male">Male</string>
+    <string name="createAccount_genderOption_female">Female</string>
+    <string name="createAccount_terms">I Agree To The Therms and Conditions</string>
+    <string name="createAccount_register">Register</string>
+    <string name="createAccount_alrready">Already registered?</string>
+    <string name="createAccount_signIn">Sing In</string>
+
+</resources>
