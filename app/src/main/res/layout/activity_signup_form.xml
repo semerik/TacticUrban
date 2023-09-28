@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".SignupForm">
 
+    <ImageView
+        android:id="@+id/createAccount_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fondo2" />
+
+
+
     <View
         android:id="@+id/linea1"
         android:layout_width="0dp"
@@ -47,30 +60,30 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instructions"
+        app:layout_constraintTop_toBottomOf="@+id/loginForm_instructions"
 
         android:layout_margin="8dp"
 
         />
 
     <TextView
-        android:id="@+id/createOccount"
+        android:id="@+id/loginForm_loginContinue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:gravity="center"
         android:text="@string/createOccount_createOccount"
-        android:textSize="18dp"
+        android:textSize="22dp"
         android:textStyle="bold"
 
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/instructions"
+        android:id="@+id/loginForm_instructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -81,7 +94,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createOccount" />
+        app:layout_constraintTop_toBottomOf="@+id/loginForm_loginContinue" />
 
     <EditText
         android:id="@+id/createAccount_fullName"
@@ -95,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textO" />
 
     <EditText
-        android:id="@+id/createAccount_userName"
+        android:id="@+id/loginForm_userName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
@@ -116,10 +129,10 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="@+id/linea2"
         app:layout_constraintStart_toStartOf="@+id/linea1"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount_userName" />
+        app:layout_constraintTop_toBottomOf="@+id/loginForm_userName" />
 
     <EditText
-        android:id="@+id/createAccount_password"
+        android:id="@+id/loginForm_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
@@ -138,7 +151,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/linea2"
         app:layout_constraintStart_toStartOf="@+id/linea1"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount_password" />
+        app:layout_constraintTop_toBottomOf="@+id/loginForm_password" />
 
     <RadioGroup
         android:id="@+id/radio_group_gender"
@@ -179,20 +192,8 @@
         app:layout_constraintTop_toBottomOf="@+id/radio_group_gender" />
 
 
-    <EditText
-        android:id="@+id/editTextFecha"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:drawableRight="@drawable/ic_calendar"
 
-        android:focusable="false"
 
-        android:hint="Selecciona una fecha"
-        android:inputType="none"
-        app:layout_constraintStart_toStartOf="@+id/linea1"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount_terms" />
 
     <TextView
         android:id="@+id/textViewFechaSeleccionada"
@@ -233,6 +234,10 @@
 
         android:layout_marginTop="16dp"
 
+        android:textColor="#000"
+        android:textSize="16dp"
+
+
         android:backgroundTint="#4EE534"
         android:text="Obtener Dirección"
         app:layout_constraintEnd_toEndOf="@+id/linea1"
@@ -247,6 +252,9 @@
         android:backgroundTint="#4EE534"
 
         android:text="@string/createAccount_register"
+        android:textColor="#000"
+        android:textSize="16dp"
+
 
         app:layout_constraintEnd_toEndOf="@+id/linea2"
         app:layout_constraintStart_toStartOf="@+id/linea1"
@@ -280,6 +288,16 @@
         app:layout_constraintStart_toStartOf="@+id/linea2"
         app:layout_constraintTop_toBottomOf="@+id/createAccount_register" />
 
+    <ImageView
+        android:id="@+id/editTextFecha"
+        android:layout_width="40dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+
+        app:srcCompat="@drawable/ic_calendar"
+        app:layout_constraintStart_toStartOf="@+id/linea1"
+        app:layout_constraintTop_toBottomOf="@+id/createAccount_terms"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

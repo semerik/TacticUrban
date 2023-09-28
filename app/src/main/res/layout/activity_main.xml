@@ -7,5 +7,83 @@
     tools:context=".MainActivity">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:srcCompat="@drawable/fondo4"
+        tools:srcCompat="@drawable/fondo4" />
+
+    <ImageView
+        android:id="@+id/main_logo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="40dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:srcCompat="@drawable/logo"
+        tools:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/main_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#F31900"
+        android:text="@string/main_login"
+
+        android:onClick="goLogin"
+
+        app:layout_constraintStart_toStartOf="@+id/main_logo"
+        app:layout_constraintTop_toBottomOf="@+id/main_information" />
+
+    <Button
+        android:id="@+id/main_signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#F31900"
+        android:text="@string/main_signUp"
+        android:onClick="goSingIn"
+        app:layout_constraintEnd_toEndOf="@+id/main_logo"
+        app:layout_constraintTop_toBottomOf="@+id/main_information" />
+
+    <TextView
+        android:id="@+id/main_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/main_information"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_logo" />
+
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="15dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/main_signUp"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toEndOf="@+id/main_login"
+        app:layout_constraintTop_toBottomOf="@+id/main_information"
+      />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
