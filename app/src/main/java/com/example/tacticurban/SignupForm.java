@@ -71,7 +71,7 @@ public class SignupForm extends AppCompatActivity {
         radioMale = findViewById(R.id.radio_male);
         radioFemale = findViewById(R.id.radio_female);
         terms = findViewById(R.id.createAccount_terms);
-        fechaSeleccionada = findViewById(R.id.textViewFechaSeleccionada);
+        fechaSeleccionada = findViewById(R.id.textViewFecha);
         ubicacion = findViewById(R.id.addressTextView);
         btnRegister = findViewById(R.id.createAccount_register);
 

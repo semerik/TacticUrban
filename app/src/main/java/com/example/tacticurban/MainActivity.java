@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goReportarIncidente (View view){
         cargando.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(MainActivity.this, ReportarIncidenteMaps.class);
+        Intent intent = new Intent(MainActivity.this, ReportarIncidente.class);
         startActivity(intent);
     }
 

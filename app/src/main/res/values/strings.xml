@@ -29,6 +29,12 @@
     <string name="loginForm_singIn">Sign In</string>
     <string name="loginForm_register">Register</string>
 
+    <array name="report_incident">
+        <item>Vial</item>
+        <item>Hueco</item>
+        <item>Señalizacion</item>
+    </array>
+
     <string name="main_information">Welcome to UrbanTactics\na place for road safety for all citizens</string>
     <string name="main_signUp">SignUp</string>
     <string name="main_login">Login</string>
