@@ -9,7 +9,7 @@
     <string name="createAccount_confirmPassword">Confirm Password</string>
     <array name="createAccount_rol">
         <item>Ciudadano</item>
-        <item>Funcionario </item>
+        <item>Funcionario</item>
     </array>
     <string name="createAccount_direction">Accept the location terms</string>
     <string name="createAccount_direction_terms">Get address</string>
@@ -21,7 +21,7 @@
     <string name="createAccount_register">Register</string>
     <string name="createAccount_alrready">Already registered?</string>
     <string name="createAccount_signIn">Sing In</string>
-    
+
     <string name="loginForm_loginContinue">Login to continue</string>
     <string name="loginForm_instructions">Enter your username and password to access urban tactics\nif you do not have an account, click to register </string>
     <string name="loginForm_userName">Enter User Name</string>
@@ -30,6 +30,7 @@
     <string name="loginForm_register">Register</string>
 
     <string name="main_information">Welcome to UrbanTactics\na place for road safety for all citizens</string>
-    <string name="main_signUp">SingUp</string>
+    <string name="main_signUp">SignUp</string>
     <string name="main_login">Login</string>
+    <string name="title_activity_reportar_incidente_maps">ReportarIncidenteMaps</string>
 </resources>

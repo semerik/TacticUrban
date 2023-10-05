@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -14,8 +15,11 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,18 +34,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import OpenHelper.SQLite_OpenHelper;
+
 public class SignupForm extends AppCompatActivity {
 
+
     //Fecha
-    private EditText editTextFecha;
+    private ImageView imgFecha;
     private Calendar calendar;
 
     //Ubicacion
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private TextView addressTextView;
+    private TextView fullName,user,email,password, fechaSeleccionada,ubicacion;
+    private RadioGroup groupGender;
+    private RadioButton radioMale, radioFemale;
+    private CheckBox terms;
+    private Button btnRegister;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
-    private TextView textViewFechaSeleccionada;
+    SQLite_OpenHelper bdHelper = new SQLite_OpenHelper(this,null,1);
+
 
 
     @Override
@@ -49,13 +61,47 @@ public class SignupForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_form);
 
+        //R.finders y parametros
+        fullName = findViewById(R.id.createAccount_fullName);
+        user = findViewById(R.id.loginForm_userName);
+        imgFecha = findViewById(R.id.editTextFecha);
+        email = findViewById(R.id.createAccount_eMail);
+        password = findViewById(R.id.loginForm_password);
+        groupGender = findViewById(R.id.radio_group_gender);
+        radioMale = findViewById(R.id.radio_male);
+        radioFemale = findViewById(R.id.radio_female);
+        terms = findViewById(R.id.createAccount_terms);
+        fechaSeleccionada = findViewById(R.id.textViewFechaSeleccionada);
+        ubicacion = findViewById(R.id.addressTextView);
+        btnRegister = findViewById(R.id.createAccount_register);
+
+        //base de datos registrar usuario
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bdHelper.insertUser(
+                        fullName.getText().toString(),
+                        user.getText().toString(),
+                        email.getText().toString(),
+                        password.getText().toString(),
+                        saberRadioGroup(),
+                        fechaSeleccionada.getText().toString(),
+                        ubicacion.getText().toString()
+                );
+
+                bdHelper.closeBD();
+
+                Toast.makeText(getApplicationContext(),"Registro almacenado con éxito",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), LoginForm.class);
+                startActivity(intent);
+            }
+        });
+
+
         //Fecha
-
-        editTextFecha = findViewById(R.id.editTextFecha);
-        textViewFechaSeleccionada = findViewById(R.id.textViewFechaSeleccionada);
         calendar = Calendar.getInstance();
-
-        editTextFecha.setOnClickListener(new View.OnClickListener() {
+        imgFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int year = calendar.get(Calendar.YEAR);
@@ -76,12 +122,11 @@ public class SignupForm extends AppCompatActivity {
                                 if (age >= 18) {
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                                     String selectedDate = dateFormat.format(selectedCalendar.getTime());
-                                    editTextFecha.setText(selectedDate);
-                                    textViewFechaSeleccionada.setText(selectedDate);
+                                    fechaSeleccionada.setText(selectedDate);
                                     // Aquí puedes permitir que el usuario continúe con el registro.
                                 } else {
                                     // Muestra un mensaje de error o toma la acción correspondiente.
-                                    textViewFechaSeleccionada.setText("Edad insuficiente para registrarse.");
+                                    fechaSeleccionada.setText("Edad insuficiente para registrarse.");
                                     // Aquí puedes mostrar un mensaje de error o tomar otra acción.
                                 }
                             }
@@ -96,7 +141,7 @@ public class SignupForm extends AppCompatActivity {
 
         //Ubicación
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        addressTextView = findViewById(R.id.addressTextView);
+
 
         Button getLocationButton = findViewById(R.id.getLocationButton);
         getLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +158,22 @@ public class SignupForm extends AppCompatActivity {
         });
     }
 
+    //Aca termina onCreate
+
+
+
+    private String saberRadioGroup(){
+
+        int selectedId = groupGender.getCheckedRadioButtonId();
+        String selectedOption = "";
+
+        if (selectedId != -1) {
+            RadioButton radioButton = findViewById(selectedId);
+            selectedOption = radioButton.getText().toString();
+        }
+
+        return selectedOption;
+    }
 
     private int calculateAge(Date birthDate, Date currentDate) {
         Calendar birthCalendar = Calendar.getInstance();
@@ -135,8 +196,10 @@ public class SignupForm extends AppCompatActivity {
         }
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+
                     @Override
                     public void onSuccess(Location location) {
+
                         if (location != null) {
                             Geocoder geocoder = new Geocoder(SignupForm.this, Locale.getDefault());
                             try {
@@ -144,9 +207,9 @@ public class SignupForm extends AppCompatActivity {
                                 if (!addresses.isEmpty()) {
                                     Address address = addresses.get(0);
                                     String direccion = address.getAddressLine(0);
-                                    addressTextView.setText(direccion);
+                                    ubicacion.setText(direccion);
                                 } else {
-                                    addressTextView.setText("No se pudo obtener la dirección.");
+                                    ubicacion.setText("No se pudo obtener la dirección.");
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();

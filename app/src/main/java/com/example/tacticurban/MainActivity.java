@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void goSingIn(View view){
+    public void goSignIn(View view){
         cargando.setVisibility(View.VISIBLE);
         Intent intent = new Intent(MainActivity.this, SignupForm.class);
         startActivity(intent);
@@ -30,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
     public void goLogin (View view){
         cargando.setVisibility(View.VISIBLE);
         Intent intent = new Intent(MainActivity.this, LoginForm.class);
+        startActivity(intent);
+    }
+
+    public void goReportarIncidente (View view){
+        cargando.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(MainActivity.this, ReportarIncidenteMaps.class);
         startActivity(intent);
     }
 

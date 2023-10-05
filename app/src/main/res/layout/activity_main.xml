@@ -48,6 +48,20 @@
         app:layout_constraintTop_toBottomOf="@+id/main_information" />
 
     <Button
+        android:id="@+id/main_login2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#F31900"
+        android:onClick="goLogin"
+
+        android:text="@string/main_login"
+
+        app:layout_constraintStart_toStartOf="@+id/main_logo"
+        app:layout_constraintTop_toBottomOf="@+id/main_information" />
+
+    <Button
         android:id="@+id/main_signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +69,19 @@
         android:layout_marginEnd="20dp"
         android:backgroundTint="#F31900"
         android:text="@string/main_signUp"
-        android:onClick="goSingIn"
+        android:onClick="goSignIn"
+        app:layout_constraintEnd_toEndOf="@+id/main_logo"
+        app:layout_constraintTop_toBottomOf="@+id/main_information" />
+
+    <Button
+        android:id="@+id/reporteIncidente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="104dp"
+        android:backgroundTint="#F31900"
+        android:onClick="goReportarIncidente"
+        android:text="reporteIncidente"
         app:layout_constraintEnd_toEndOf="@+id/main_logo"
         app:layout_constraintTop_toBottomOf="@+id/main_information" />
 
