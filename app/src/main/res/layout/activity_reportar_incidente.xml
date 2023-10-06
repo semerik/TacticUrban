@@ -76,6 +76,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/editTextFecha"
         app:layout_constraintEnd_toEndOf="@+id/mapView"
         app:layout_constraintTop_toTopOf="@+id/editTextFecha"
+        android:onClick="onReportarClick"
         />
 
     <TextView
