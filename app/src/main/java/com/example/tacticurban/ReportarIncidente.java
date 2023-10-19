@@ -2,10 +2,14 @@ package com.example.tacticurban;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +24,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import OpenHelper.IncidentesSQLiteOpenHelper;
 
+import java.io.IOException;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+
 public class ReportarIncidente extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private Marker currentMarker;
@@ -30,6 +40,11 @@ public class ReportarIncidente extends AppCompatActivity implements OnMapReadyCa
     private Spinner spinnerIncidente;
     private EditText editDescripcion;
     private IncidentesSQLiteOpenHelper dbHelper;
+
+    private ImageView imgFecha;
+    private TextView textFecha;
+    private UsuarioActual usuarioActual;
+
 
 
     @Override
@@ -47,6 +62,17 @@ public class ReportarIncidente extends AppCompatActivity implements OnMapReadyCa
 
         dbHelper = new IncidentesSQLiteOpenHelper(this);
         dbHelper.openBD();
+
+        imgFecha = findViewById(R.id.editTextFecha);
+        textFecha = findViewById(R.id.textViewFecha);
+        usuarioActual = UsuarioActual.getInstance();
+
+        imgFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textFecha.setText(obtenerFechaHoy());
+            }
+        });
     }
 
     @Override
@@ -68,12 +94,40 @@ public class ReportarIncidente extends AppCompatActivity implements OnMapReadyCa
         // Crea un nuevo marcador en la posición del clic
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("Nuevo marcador");
+        markerOptions.title("REPORT");
 
         currentMarker = googleMap.addMarker(markerOptions); // Asigna el nuevo marcador como el marcador actual
+
         // Actualiza el EditText con la ubicación del marcador
+        // Utiliza geocodificación inversa para obtener la dirección
+        String direccion = obtenerDireccionDesdeLatLong(latLng.latitude, latLng.longitude);
         EditText editLocalizacion = findViewById(R.id.editLocalizacion);
-        editLocalizacion.setText("Latitud: " + latLng.latitude + ", Longitud: " + latLng.longitude);
+        editLocalizacion.setText(direccion);
+    }
+
+    // Método para obtener la dirección desde latitud y longitud
+    private String obtenerDireccionDesdeLatLong(double latitud, double longitud) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitud, longitud, 1);
+            if (!addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                // Construye la dirección como una cadena de texto
+                StringBuilder direccionBuilder = new StringBuilder();
+                for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                    direccionBuilder.append(address.getAddressLine(i));
+                    if (i < address.getMaxAddressLineIndex()) {
+                        direccionBuilder.append(", ");
+                    }
+                }
+                return direccionBuilder.toString();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "No se pudo obtener la dirección.";
     }
 
     // Método para el botón "Reportar"
@@ -85,7 +139,7 @@ public class ReportarIncidente extends AppCompatActivity implements OnMapReadyCa
 
         if (!localizacion.isEmpty() && !tipoIncidente.isEmpty() && !descripcion.isEmpty()) {
             // Insertar el incidente en la base de datos
-            dbHelper.insertIncidente(localizacion, tipoIncidente, descripcion);
+            dbHelper.insertIncidente(localizacion, tipoIncidente, descripcion,(String) textFecha.getText(),(String) usuarioActual.getUsername());
 
             // Limpiar los campos después de la inserción
             editLocalizacion.setText("");
@@ -99,7 +153,19 @@ public class ReportarIncidente extends AppCompatActivity implements OnMapReadyCa
         }
     }
 
-    // Resto de tu código...
+
+
+    public String obtenerFechaHoy() {
+        // Obtén una instancia del calendario con la fecha actual
+        Calendar calendario = Calendar.getInstance();
+        // Crea un objeto SimpleDateFormat para formatear la fecha como desees
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+
+        // Obtiene la fecha actual formateada como una cadena de texto
+        String fechaHoy = formatoFecha.format(calendario.getTime());
+
+        return fechaHoy;
+    }
 
     @Override
     protected void onDestroy() {

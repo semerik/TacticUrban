@@ -23,6 +23,7 @@ public class SQLite_OpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_GENDER = "gender";
     public static final String COLUMN_BIRTHDATE = "birthdate";
     public static final String COLUMN_UBICATION = "ubication";
+    public static final String COLUMN_ROL = "rol";
 
 
     private static final String TABLE_CREATE =
@@ -34,6 +35,7 @@ public class SQLite_OpenHelper extends SQLiteOpenHelper {
                     COLUMN_PASSWORD + " TEXT NOT NULL, " +
                     COLUMN_GENDER + " TEXT NOT NULL, " +
                     COLUMN_BIRTHDATE + " TEXT NOT NULL, " +
+                    COLUMN_ROL + " TEXT NOT NULL, " +
                     COLUMN_UBICATION + " TEXT NOT NULL);";
 
 
@@ -46,10 +48,30 @@ public class SQLite_OpenHelper extends SQLiteOpenHelper {
         db.execSQL(TABLE_CREATE);
     }
 
+    // Método para verificar si el usuario "Admin Principal" existe
+    public boolean adminPrincipalExists() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = COLUMN_USERNAME + " = ?";
+        String[] selectionArgs = {"Admin"};
+        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
+    // Método para crear el usuario "Admin Principal" si no existe
+    public void crearAdminPrincipal() {
+        if (!adminPrincipalExists()) {
+            insertUser("Admin Principal", "Admin", "admin@admin.com", "123", "Male", "10/08/2002", "cra72i #42f 61-Sur", "admin");
+        }
+    }
+
+
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
 
     //Metodo para abrir base de datos
     public void openBD(){
@@ -60,7 +82,7 @@ public class SQLite_OpenHelper extends SQLiteOpenHelper {
             this.close();
     }
 
-    public void insertUser(String fullName, String userName, String eMail,String password,  String gender, String birthdate, String ubication){
+    public void insertUser(String fullName, String userName, String eMail,String password,  String gender, String birthdate, String ubication,String rol){
 
         ContentValues values = new ContentValues();
 
@@ -71,6 +93,7 @@ public class SQLite_OpenHelper extends SQLiteOpenHelper {
         values.put("gender",gender);
         values.put("birthdate",birthdate);
         values.put("ubication",ubication);
+        values.put("rol",rol);
         this.getWritableDatabase().insert(TABLE_NAME,null,values);
 
 

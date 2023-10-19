@@ -37,6 +37,7 @@ public class LoginForm extends AppCompatActivity {
         user = findViewById(R.id.loginForm_userName);
         password=findViewById(R.id.loginForm_password);
         login=findViewById(R.id.loginForm_singIn);
+        usuarioActual = UsuarioActual.getInstance();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +57,7 @@ public class LoginForm extends AppCompatActivity {
 
                         // Llamar al método iniciarSesion de UsuarioActual
                         usuarioActual.iniciarSesion(fullName, userName, email, password.getText().toString(), gender, birthdate, ubication);
+                        Toast.makeText(getApplicationContext(), "Se ah iniciado sesion bienvenido: " + usuarioActual.getUsername(), Toast.LENGTH_LONG).show();
 
                         // Continuar a la actividad principal (MainActivity)
                         Intent intent = new Intent(getApplicationContext(), Menu.class);

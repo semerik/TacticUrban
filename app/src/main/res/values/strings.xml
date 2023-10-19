@@ -11,7 +11,7 @@
         <item>Ciudadano</item>
         <item>Funcionario</item>
     </array>
-    <string name="createAccount_direction">Accept the location terms</string>
+    <string name="createAccount_direction">Click and Accept the location terms</string>
     <string name="createAccount_direction_terms">Get address</string>
     <string name="createAccount_birthdate">Click For Select Birthdate</string>
     <string name="createAccount_genderOption">Gender: </string>

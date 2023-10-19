@@ -73,18 +73,6 @@
         app:layout_constraintEnd_toEndOf="@+id/main_logo"
         app:layout_constraintTop_toBottomOf="@+id/main_information" />
 
-    <Button
-        android:id="@+id/reporteIncidente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="104dp"
-        android:backgroundTint="#F31900"
-        android:onClick="goReportarIncidente"
-        android:text="reporteIncidente"
-        app:layout_constraintEnd_toEndOf="@+id/main_logo"
-        app:layout_constraintTop_toBottomOf="@+id/main_information" />
-
     <TextView
         android:id="@+id/main_information"
         android:layout_width="wrap_content"

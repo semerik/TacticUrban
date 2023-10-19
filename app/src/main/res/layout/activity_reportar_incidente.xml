@@ -52,7 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:text="Fecha: dd/mm/aa"
+        android:hint="dd/mm/aaaa"
         android:textSize="16dp"
 
         app:layout_constraintBottom_toBottomOf="@+id/editTextFecha"

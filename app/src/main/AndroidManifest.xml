@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TacticUrban"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ReportesUsuario"
+            android:exported="false" />
         <activity
             android:name=".Menu"
             android:exported="false" />

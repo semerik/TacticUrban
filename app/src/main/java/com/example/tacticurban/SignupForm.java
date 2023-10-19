@@ -61,6 +61,7 @@ public class SignupForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_form);
 
+        bdHelper.crearAdminPrincipal();
         //R.finders y parametros
         fullName = findViewById(R.id.createAccount_fullName);
         user = findViewById(R.id.loginForm_userName);
@@ -76,7 +77,6 @@ public class SignupForm extends AppCompatActivity {
         btnRegister = findViewById(R.id.createAccount_register);
 
         //base de datos registrar usuario
-
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +87,8 @@ public class SignupForm extends AppCompatActivity {
                         password.getText().toString(),
                         saberRadioGroup(),
                         fechaSeleccionada.getText().toString(),
-                        ubicacion.getText().toString()
+                        ubicacion.getText().toString(),
+                        "ciudadano"
                 );
 
                 bdHelper.closeBD();
@@ -127,7 +128,7 @@ public class SignupForm extends AppCompatActivity {
                                 } else {
                                     // Muestra un mensaje de error o toma la acción correspondiente.
                                     fechaSeleccionada.setText("Edad insuficiente para registrarse.");
-                                    // Aquí puedes mostrar un mensaje de error o tomar otra acción.
+
                                 }
                             }
                         },

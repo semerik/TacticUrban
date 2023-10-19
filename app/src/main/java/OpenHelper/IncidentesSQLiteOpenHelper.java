@@ -3,7 +3,6 @@ package OpenHelper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -17,12 +16,16 @@ public class IncidentesSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LOCALIZACION = "localizacion";
     public static final String COLUMN_TIPO_INCIDENTE = "tipo_incidente";
     public static final String COLUMN_DESCRIPCION = "descripcion";
+    public static final String COLUMN_DATE = "fecha";
+    public static final String COLUMN_USER = "user";
 
     private static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_LOCALIZACION + " TEXT NOT NULL, " +
                     COLUMN_TIPO_INCIDENTE + " TEXT NOT NULL, " +
+                    COLUMN_DATE + " TEXT NOT NULL, " +
+                    COLUMN_USER + " TEXT NOT NULL, " +
                     COLUMN_DESCRIPCION + " TEXT NOT NULL);";
 
     public IncidentesSQLiteOpenHelper(Context context) {
@@ -51,11 +54,13 @@ public class IncidentesSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     // Método para insertar un incidente
-    public void insertIncidente(String localizacion, String tipoIncidente, String descripcion) {
+    public void insertIncidente(String localizacion, String tipoIncidente, String descripcion,String date, String user) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_LOCALIZACION, localizacion);
         values.put(COLUMN_TIPO_INCIDENTE, tipoIncidente);
         values.put(COLUMN_DESCRIPCION, descripcion);
+        values.put(COLUMN_USER, user);
+        values.put(COLUMN_DATE, date);
 
         this.getWritableDatabase().insert(TABLE_NAME, null, values);
     }
@@ -67,7 +72,9 @@ public class IncidentesSQLiteOpenHelper extends SQLiteOpenHelper {
                 COLUMN_ID,
                 COLUMN_LOCALIZACION,
                 COLUMN_TIPO_INCIDENTE,
-                COLUMN_DESCRIPCION
+                COLUMN_DESCRIPCION,
+                COLUMN_USER,
+                COLUMN_DATE
         };
 
         return db.query(

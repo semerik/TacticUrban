@@ -32,11 +32,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LoginForm.class);
         startActivity(intent);
     }
-
-    public void goReportarIncidente (View view){
-        cargando.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(MainActivity.this, ReportarIncidente.class);
-        startActivity(intent);
-    }
-
 }
