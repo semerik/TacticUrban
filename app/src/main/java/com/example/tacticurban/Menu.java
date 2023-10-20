@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Menu extends AppCompatActivity {
 private TextView userName;
@@ -27,6 +28,18 @@ private UsuarioActual usuarioActual;
 
     public void goReportarIncidente (View view){
         Intent intent = new Intent(Menu.this, ReportarIncidente.class);
+        startActivity(intent);
+    }
+
+    public void cerrarSesion(View view){
+        usuarioActual.cerrarSesion();
+        Toast.makeText(getApplicationContext(), "Se ah cerrado sesion correctamente", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(Menu.this, LoginForm.class);
+        startActivity(intent);
+    }
+
+    public void goReportesUsuario (View view){
+        Intent intent = new Intent(Menu.this, ReportesUsuario.class);
         startActivity(intent);
     }
 

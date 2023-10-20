@@ -111,6 +111,7 @@ public class SQLite_OpenHelper extends SQLiteOpenHelper {
                 COLUMN_PASSWORD,
                 COLUMN_GENDER,
                 COLUMN_BIRTHDATE,
+                COLUMN_ROL,
                 COLUMN_UBICATION
         };
 

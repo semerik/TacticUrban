@@ -87,4 +87,34 @@ public class IncidentesSQLiteOpenHelper extends SQLiteOpenHelper {
                 null
         );
     }
+
+    //método que obtiene los incidentes por usuario
+    public Cursor getIncidentesByUser(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {
+                COLUMN_ID + " AS _id",
+                COLUMN_LOCALIZACION,
+                COLUMN_TIPO_INCIDENTE,
+                COLUMN_DESCRIPCION,
+                COLUMN_USER,
+                COLUMN_DATE
+        };
+
+        String selection = COLUMN_USER + " = ?";
+        String[] selectionArgs = { username };
+
+        return db.query(
+                TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+    }
+
+
+
+
 }

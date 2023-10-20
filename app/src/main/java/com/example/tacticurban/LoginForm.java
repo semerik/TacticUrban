@@ -1,6 +1,7 @@
 package com.example.tacticurban;
 
 import static OpenHelper.SQLite_OpenHelper.COLUMN_FULL_NAME;
+import static OpenHelper.SQLite_OpenHelper.COLUMN_ROL;
 import static OpenHelper.SQLite_OpenHelper.COLUMN_USERNAME;
 import static OpenHelper.SQLite_OpenHelper.COLUMN_EMAIL;
 import static OpenHelper.SQLite_OpenHelper.COLUMN_GENDER;
@@ -54,9 +55,10 @@ public class LoginForm extends AppCompatActivity {
                         String gender = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GENDER));
                         String birthdate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIRTHDATE));
                         String ubication = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UBICATION));
+                        String rol = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROL));
 
                         // Llamar al método iniciarSesion de UsuarioActual
-                        usuarioActual.iniciarSesion(fullName, userName, email, password.getText().toString(), gender, birthdate, ubication);
+                        usuarioActual.iniciarSesion(fullName, userName, email, password.getText().toString(), gender, birthdate, ubication,rol);
                         Toast.makeText(getApplicationContext(), "Se ah iniciado sesion bienvenido: " + usuarioActual.getUsername(), Toast.LENGTH_LONG).show();
 
                         // Continuar a la actividad principal (MainActivity)

@@ -1,5 +1,7 @@
 package com.example.tacticurban;
 
+import android.widget.Toast;
+
 public class UsuarioActual {
     private static UsuarioActual instancia;
     private  String full_name,
@@ -7,7 +9,8 @@ public class UsuarioActual {
             email, password,
             gender,
             birthdate,
-            ubication;
+            ubication,
+            rol;
 
 
     private UsuarioActual() {
@@ -21,7 +24,7 @@ public class UsuarioActual {
         return instancia;
     }
 
-    public void iniciarSesion(String full_name, String username, String email, String password, String gender, String birthdate, String ubication) {
+    public void iniciarSesion(String full_name, String username, String email, String password, String gender, String birthdate, String ubication,String rol) {
         this.full_name = full_name;
         this.username = username;
         this.email = email;
@@ -29,18 +32,12 @@ public class UsuarioActual {
         this.gender = gender;
         this.birthdate = birthdate;
         this.ubication = ubication;
+        this.rol = rol;
     }
 
 
     public void cerrarSesion() {
-        this.full_name = null;
-        this.username = null;
-        this.email = null;
-        this.password = null;
-        this.gender = null;
-        this.birthdate = null;
-        this.ubication = null;
-        // Limpia cualquier otro dato de sesión si es necesario
+        instancia = null;
     }
 
     public static UsuarioActual getInstancia() {
@@ -73,6 +70,9 @@ public class UsuarioActual {
 
     public String getUbication() {
         return ubication;
+    }
+    public String getRol() {
+        return rol;
     }
 }
 
