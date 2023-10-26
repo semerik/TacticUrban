@@ -101,6 +101,7 @@ public class ReportarIncidente extends AppCompatActivity implements OnMapReadyCa
         // Actualiza el EditText con la ubicación del marcador
         // Utiliza geocodificación inversa para obtener la dirección
         String direccion = obtenerDireccionDesdeLatLong(latLng.latitude, latLng.longitude);
+        obtenerLocalidadDesdeDireccion(latLng.latitude, latLng.longitude); //aquiwe
         EditText editLocalizacion = findViewById(R.id.editLocalizacion);
         editLocalizacion.setText(direccion);
     }
@@ -129,6 +130,36 @@ public class ReportarIncidente extends AppCompatActivity implements OnMapReadyCa
 
         return "No se pudo obtener la dirección.";
     }
+
+    private void obtenerLocalidadDesdeDireccion(double latitud, double longitud) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitud, longitud, 1);
+            if (!addresses.isEmpty()) {
+                Address address = addresses.get(0);
+
+                // Busca la localidad (barrio) en la dirección
+                String localidad = null;
+                if (address.getSubLocality() != null) {
+                    localidad = address.getSubLocality();
+                } else if (address.getSubAdminArea() != null) {
+                    localidad = address.getSubAdminArea();
+                }
+
+                if (localidad != null) {
+                    // Ahora puedes usar la información de la localidad como desees
+                    Toast.makeText(this, "Localidad: " + localidad, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "No se pudo determinar la localidad.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     // Método para el botón "Reportar"
     public void onReportarClick(View view) {
