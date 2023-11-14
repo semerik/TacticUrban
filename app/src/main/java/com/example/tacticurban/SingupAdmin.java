@@ -10,6 +10,8 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,6 +23,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +55,7 @@ public class SingupAdmin extends AppCompatActivity {
     private CheckBox terms;
     private Button btnRegister;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private Spinner rol;
 
     SQLite_OpenHelper bdHelper = new SQLite_OpenHelper(this,null,1);
 
@@ -60,7 +64,9 @@ public class SingupAdmin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup_form);
+        setContentView(R.layout.activity_singup_admin);
+
+        rol = findViewById(R.id.spinnerRol);
 
         bdHelper.crearAdminPrincipal();
         //R.finders y parametros
@@ -81,6 +87,48 @@ public class SingupAdmin extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Validar campos obligatorios
+                if (fullName.getText().toString().isEmpty() || user.getText().toString().isEmpty() ||
+                        email.getText().toString().isEmpty() || password.getText().toString().isEmpty() ||
+                        fechaSeleccionada.getText().toString().isEmpty() || ubicacion.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+                    return; // Detener el proceso de registro si hay campos vacíos
+                }
+
+                // Validar términos y condiciones
+                if (!terms.isChecked()) {
+                    Toast.makeText(getApplicationContext(), "Debes aceptar los términos y condiciones", Toast.LENGTH_SHORT).show();
+                    return; // Detener el proceso de registro si los términos no están aceptados
+                }
+
+                // Validar si es mayor de edad
+                Date currentDate = Calendar.getInstance().getTime();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                try {
+                    Date selectedDate = dateFormat.parse(fechaSeleccionada.getText().toString());
+                    int age = calculateAge(selectedDate, currentDate);
+                    if (age < 18) {
+                        Toast.makeText(getApplicationContext(), "Debes ser mayor de 18 años para registrarte", Toast.LENGTH_SHORT).show();
+                        return; // Detener el proceso de registro si no es mayor de edad
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return; // Detener el proceso si hay un error al calcular la edad
+                }
+
+                // Validar el formato del correo electrónico
+                if (!isValidEmail(email.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "Ingresa un correo electrónico válido", Toast.LENGTH_SHORT).show();
+                    return; // Detener el proceso de registro si el correo electrónico no es válido
+                }
+
+                // Verificar que el nombre de usuario no exista
+                if (usuarioExistente(user.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "El nombre de usuario ya está en uso, elige otro.", Toast.LENGTH_SHORT).show();
+                    return; // Detener el proceso de registro si el nombre de usuario ya existe
+                }
+
+                // Realizar el registro si todas las validaciones son exitosas
                 bdHelper.insertUser(
                         fullName.getText().toString(),
                         user.getText().toString(),
@@ -89,12 +137,12 @@ public class SingupAdmin extends AppCompatActivity {
                         saberRadioGroup(),
                         fechaSeleccionada.getText().toString(),
                         ubicacion.getText().toString(),
-                        "ciudadano"
+                        rol.getSelectedItem().toString()
                 );
 
                 bdHelper.closeBD();
 
-                Toast.makeText(getApplicationContext(),"Registro almacenado con éxito",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Registro almacenado con éxito", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), LoginForm.class);
                 startActivity(intent);
             }
@@ -186,39 +234,35 @@ public class SingupAdmin extends AppCompatActivity {
     }
 
     private void obtenerDireccion() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        fusedLocationProviderClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    Geocoder geocoder = new Geocoder(SingupAdmin.this, Locale.getDefault());
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        if (!addresses.isEmpty()) {
+                            Address address = addresses.get(0);
 
-                    @Override
-                    public void onSuccess(Location location) {
+                            // Obtener solo la localidad
+                            String localidad = address.getLocality();
 
-                        if (location != null) {
-                            Geocoder geocoder = new Geocoder(SingupAdmin.this, Locale.getDefault());
-                            try {
-                                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                if (!addresses.isEmpty()) {
-                                    Address address = addresses.get(0);
-                                    String direccion = address.getAddressLine(0);
-                                    ubicacion.setText(direccion);
-                                } else {
-                                    ubicacion.setText("No se pudo obtener la dirección.");
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            // Mostrar la localidad en el TextView
+                            ubicacion.setText(localidad);
+                        } else {
+                            ubicacion.setText("No se pudo obtener la localidad.");
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        ubicacion.setText("Error al obtener la localidad.");
                     }
-                });
+                }
+            }
+        });
     }
 
     @Override
@@ -233,5 +277,22 @@ public class SingupAdmin extends AppCompatActivity {
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults); // Agrega esta línea
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
+
+    private boolean usuarioExistente(String username) {
+        // Realizar una consulta a la base de datos para verificar si el nombre de usuario ya existe
+        // Puedes modificar esto según la lógica específica de tu base de datos
+        SQLiteDatabase db = bdHelper.getReadableDatabase();
+        String query = "SELECT * FROM " + SQLite_OpenHelper.COLUMN_USERNAME +
+                " WHERE " + SQLite_OpenHelper.COLUMN_USERNAME + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{username});
+        boolean existe = cursor.getCount() > 0;
+        cursor.close();
+        return existe;
     }
 }

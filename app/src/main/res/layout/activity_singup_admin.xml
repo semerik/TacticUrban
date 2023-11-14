@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupForm">
+    tools:context=".SingupAdmin">
 
     <ImageView
         android:id="@+id/createAccount_logo"
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
 
         android:gravity="center"
-        android:text="@string/createOccount_createOccount"
+        android:text="Create Occount for Rol"
         android:textSize="22dp"
         android:textStyle="bold"
 
@@ -248,45 +248,17 @@
         android:id="@+id/createAccount_register"
         android:layout_width="0dp"
         android:layout_height="62dp"
-        android:layout_marginTop="16dp"
         android:backgroundTint="#4EE534"
 
+        android:layout_marginTop="16dp"
         android:text="@string/createAccount_register"
         android:textColor="#000"
         android:textSize="16dp"
 
-
         app:layout_constraintEnd_toEndOf="@+id/linea2"
         app:layout_constraintStart_toStartOf="@+id/linea1"
-        app:layout_constraintTop_toBottomOf="@+id/getLocationButton" />
+        app:layout_constraintTop_toBottomOf="@+id/textRoles" />
 
-    <TextView
-        android:id="@+id/createAccount_alrready"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-
-        android:hint="@string/createAccount_alrready"
-        android:textSize="16dp"
-
-        app:layout_constraintEnd_toEndOf="@+id/linea1"
-        app:layout_constraintStart_toStartOf="@+id/linea1"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount_register" />
-
-
-    <TextView
-        android:id="@+id/createAccount_singIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/createAccount_signIn"
-
-        android:textColor="#8C84CE"
-        android:textSize="16dp"
-
-        app:layout_constraintEnd_toEndOf="@+id/linea2"
-        app:layout_constraintStart_toStartOf="@+id/linea2"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount_register" />
 
     <ImageView
         android:id="@+id/editTextFecha"
@@ -298,6 +270,33 @@
         app:srcCompat="@drawable/ic_calendar"
         app:layout_constraintStart_toStartOf="@+id/linea1"
         app:layout_constraintTop_toBottomOf="@+id/createAccount_terms"/>
+
+    <Spinner
+        android:id="@+id/spinnerRol"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="16dp"
+
+        android:entries="@array/select_rol"
+
+        app:layout_constraintBottom_toBottomOf="@+id/textRoles"
+        app:layout_constraintEnd_toEndOf="@+id/linea2"
+        app:layout_constraintStart_toEndOf="@+id/textRoles"
+        app:layout_constraintTop_toTopOf="@+id/textRoles" />
+
+    <TextView
+        android:id="@+id/textRoles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+
+        android:text="Select Rol: "
+        android:textSize="16dp"
+
+        app:layout_constraintStart_toStartOf="@+id/linea1"
+        app:layout_constraintTop_toBottomOf="@+id/getLocationButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

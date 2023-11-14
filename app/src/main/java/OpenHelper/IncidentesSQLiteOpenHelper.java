@@ -69,7 +69,7 @@ public class IncidentesSQLiteOpenHelper extends SQLiteOpenHelper {
     public Cursor getAllIncidentes() {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] projection = {
-                COLUMN_ID,
+                COLUMN_ID + " AS _id",
                 COLUMN_LOCALIZACION,
                 COLUMN_TIPO_INCIDENTE,
                 COLUMN_DESCRIPCION,

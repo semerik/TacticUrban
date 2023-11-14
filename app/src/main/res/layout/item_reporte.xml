@@ -1,24 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:columnCount="2"
+    android:orientation="horizontal">
 
+    <!-- Fila 1 -->
     <TextView
         android:id="@+id/tipoIncidenteTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
         android:text="Tipo de Incidente" />
+
+
+
+    <TextView
+        android:id="@+id/heridosTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:text="Heridos" />
+
+    <!-- Fila 2 -->
+    <TextView
+        android:id="@+id/actorVialTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:text="Actor Vial" />
+
+
+    <TextView
+        android:id="@+id/muertosTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:text="Muertos" />
+
+    <TextView
+        android:id="@+id/SeñalizacionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:text="Señalizacion" />
 
     <TextView
         android:id="@+id/direccionTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
         android:text="Dirección" />
 
     <TextView
         android:id="@+id/fechaTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
         android:text="Fecha" />
-</LinearLayout>
+
+</GridLayout>

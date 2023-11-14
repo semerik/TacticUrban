@@ -8,7 +8,8 @@ import android.widget.ListView;
 
 import OpenHelper.IncidentesSQLiteOpenHelper;
 
-public class ReportesUsuario extends AppCompatActivity {
+public class ReporteAlcaldia extends AppCompatActivity {
+
 
     private ListView listView;
     private ReportesAdapter adapter;
@@ -20,14 +21,16 @@ public class ReportesUsuario extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reportes_usuario);
+        setContentView(R.layout.activity_reporte_alcaldia);
+
 
         usuarioActual = UsuarioActual.getInstance();
         username = usuarioActual.getUsername();
 
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.listViewAlcaldia);
+
         dbHelper = new IncidentesSQLiteOpenHelper(this);
-        cursor = dbHelper.getIncidentesByUser(username);
+        cursor = dbHelper.getAllIncidentes();
 
         // Crea un adaptador personalizado para mostrar los datos en el ListView
         adapter = new ReportesAdapter(this, cursor);
